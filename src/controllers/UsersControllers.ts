@@ -37,7 +37,9 @@ class UsersControllers {
   }
 
   async update(request: Request, response: Response, next: NextFunction) {
-    const { name, oldPassword, newPassword, user_id } = request.body
+    const { name, oldPassword, newPassword } = request.body
+    const { user_id } = request;
+
     try {
       const result = await this.usersServices.update({
         name,
