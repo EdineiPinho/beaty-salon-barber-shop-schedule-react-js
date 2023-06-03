@@ -3,6 +3,7 @@ import { UsersServices } from "../services/UsersServices";
 
 class UsersControllers {
   private usersServices: UsersServices
+
   constructor() {
     this.usersServices = new UsersServices()
   }
@@ -17,9 +18,9 @@ class UsersControllers {
 
   async store(request: Request, response: Response, next: NextFunction) {
     const { name, email, password } = request.body
+
     try {
       const result = await this.usersServices.create({ name, email, password })
-
       return response.status(201).json(result)
     } catch (error) {
       next(error)
@@ -28,6 +29,7 @@ class UsersControllers {
 
   async auth(request: Request, response: Response, next: NextFunction) {
     const { email, password } = request.body
+
     try {
       const result = await this.usersServices.auth(email, password)
       return response.json(result)
