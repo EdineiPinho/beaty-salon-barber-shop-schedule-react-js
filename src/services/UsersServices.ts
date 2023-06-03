@@ -21,7 +21,13 @@ class UsersServices {
     return create
   }
 
-  async update({ name, oldPassword, newPassword, avatar_url, user_id }: IUpdate) {
+  async update({
+    name,
+    oldPassword,
+    newPassword,
+    avatar_url,
+    user_id
+  }: IUpdate) {
     let password
     if (oldPassword && newPassword) {
       const findeUserById = await this.usersRepository.findUserById(user_id)
