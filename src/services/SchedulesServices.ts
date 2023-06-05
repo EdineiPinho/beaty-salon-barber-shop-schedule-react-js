@@ -1,5 +1,5 @@
 import { ICreate } from "../interfaces/SchedulesInterface";
-import { isBefore, startOfHour } from "date-fns"
+import { getHours, isBefore, startOfHour } from "date-fns"
 import { SchedulesRepository } from "../respositories/ServicesRepository";
 
 class ShcedulesServices {
@@ -7,13 +7,19 @@ class ShcedulesServices {
   constructor() {
     this.schedulesRespositoy = new SchedulesRepository()
   }
-  async create({ name, phone, date }: ICreate) {
+  async create({ name, phone, date, user_id }: ICreate) {
     const dateFormatted = new Date(date)
     const hourStart = startOfHour(dateFormatted)
+
+    const hour = getHours(hourStart)
+    if (hour <= 9 || hour >= 19) {
+      throw new Error('Create Schedule between 9 and 19.')
+    }
+
     if (isBefore(hourStart, new Date())) {
       throw new Error("Isn't allowed to schedule old date")
     }
-    const checkIsAvailable = await this.schedulesRespositoy.find(hourStart)
+    const checkIsAvailable = await this.schedulesRespositoy.find(hourStart, user_id)
     if (checkIsAvailable) {
       throw new Error('Schedule data is not available')
     }
@@ -21,6 +27,7 @@ class ShcedulesServices {
       name,
       phone,
       date: hourStart,
+      user_id,
     })
     return create
   }
@@ -31,15 +38,15 @@ class ShcedulesServices {
     return result
   }
 
-  async update(id: string, date: Date) {
+  async update(id: string, date: Date, user_id: string) {
     const dateFormatted = new Date(date)
     const hourStart = startOfHour(dateFormatted)
     if (isBefore(hourStart, new Date())) {
-      throw new Error('It is not allowed to schedule old date')
+      throw new Error("Isn't allowed to schedule old date")
     }
-    const checkIsAvailable = await this.schedulesRespositoy.find(hourStart)
+    const checkIsAvailable = await this.schedulesRespositoy.find(hourStart, user_id)
     if (checkIsAvailable) {
-      throw new Error('Schedule date is not available')
+      throw new Error('Schedule data is not available')
     }
     const result = await this.schedulesRespositoy.update(id, date)
     return result
