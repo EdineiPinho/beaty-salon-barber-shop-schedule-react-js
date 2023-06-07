@@ -3,6 +3,9 @@
 > Foi usado durante o desenvolvimento do projeto:
 
 * API RestFull
+* Axios
+* Express
+* JWT 
 * Ambiente de desenvolvimento
 * Endpoints 
 * Banco de dados relacional 
@@ -10,8 +13,6 @@
 * Autenticação JWT 
 * Middlewares
 * Node
-* Express
-* JWT 
 * Prisma
 * SQLite
 * date-fns

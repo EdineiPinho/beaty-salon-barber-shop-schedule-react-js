@@ -4,7 +4,10 @@
   padding: .9rem;
   border: none;
   border-radius: 8px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--white);
   background-color: var(--secundary);
+  cursor: pointer;
 }
+
+.button span {}

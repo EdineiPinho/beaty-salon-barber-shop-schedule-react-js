@@ -6,6 +6,7 @@ import { Button } from '../../components/Button/Index.tsx';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { api } from '../../server/index.tsx'
 import { CgProfile } from 'react-icons/cg'
 import { MdOutlineAlternateEmail } from 'react-icons/md'
 import { RiLockPasswordLine } from 'react-icons/ri'
@@ -34,8 +35,13 @@ export const Register = () => {
     formState: { errors }
   } = useForm<IFormValues>({ resolver: yupResolver(schema) })
 
-  const submit = handleSubmit((data) => {
-    console.log('dados do formulário: ', data);
+  const submit = handleSubmit(async (data) => {
+    const result = await api.post('/users', {
+      name: data.name,
+      email: data.email,
+      password: data.password
+    })
+    console.log('Resultado da requisição: ', result);
   })
 
   return (
