@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom"
-import { Login } from "../page/login/index.tsx"
-import { Register } from "../page/register/index.tsx"
+import { Login } from "../page/login/Login.tsx"
+import { Register } from "../page/register/Register.tsx"
+import { Dashboard } from "../page/dashboard/Dahsboard.tsx"
 
 export const RouteApp = () => {
   return (
@@ -10,6 +11,9 @@ export const RouteApp = () => {
       } />
       <Route path='/register' element={
         <Register />
+      } />
+      <Route path='/dashboard' element={
+        <Dashboard />
       } />
     </Routes>
   )

@@ -3,11 +3,13 @@ import logo from '../../assets/logo.webp'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Input } from '../../components/Input/Index.tsx'
-import { Button } from '../../components/Button/Index.tsx'
+import { Input } from '../../components/Input/Input.tsx'
+import { Button } from '../../components/Button/Button.tsx'
 import { Link } from 'react-router-dom'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { MdOutlineAlternateEmail } from 'react-icons/md'
+// import { api } from '../../server/Server.tsx'
+import { useAuth } from '../../hooks/auth.ts'
 
 interface IFormValues {
   email: string
@@ -15,6 +17,7 @@ interface IFormValues {
 }
 
 export function Login() {
+  const { signIn } = useAuth()
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -27,8 +30,13 @@ export function Login() {
 
   const { register, handleSubmit, formState: { errors } } = useForm<IFormValues>({ resolver: yupResolver(schema) })
 
-  const submit = handleSubmit((data) => {
-    console.log('Data: ', data);
+  const submit = handleSubmit(async ({ email, password }) => {
+    try {
+      const result = await signIn({ email, password })
+      console.log(result);
+    } catch (error) {
+      console.log('Erro de submit: ', error);
+    }
   })
 
   return (

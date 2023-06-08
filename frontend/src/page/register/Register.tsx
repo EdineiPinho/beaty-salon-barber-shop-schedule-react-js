@@ -1,12 +1,12 @@
-import { Input } from '../../components/Input/Index.tsx';
+import { Input } from '../../components/Input/Input.tsx';
 import style from './Register.module.css';
 import logo from '../../assets/logo.webp';
 import { Link } from 'react-router-dom';
-import { Button } from '../../components/Button/Index.tsx';
+import { Button } from '../../components/Button/Button.tsx';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { api } from '../../server/index.tsx'
+import { api } from '../../server/Server.tsx'
 import { CgProfile } from 'react-icons/cg'
 import { MdOutlineAlternateEmail } from 'react-icons/md'
 import { RiLockPasswordLine } from 'react-icons/ri'
