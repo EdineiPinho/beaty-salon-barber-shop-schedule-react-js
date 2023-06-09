@@ -1,4 +1,4 @@
-import { ReactNode, createContext } from "react";
+import { ReactNode, createContext, useState } from "react";
 import { api } from "../server/Server.tsx";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
@@ -9,9 +9,16 @@ interface IAuthProvider {
 }
 
 interface IAuthContextData {
-  signIn: ({ email, password }: ISignIn) => void;
+  signIn: ({ email, password }: ISignIn) => void
+  signOut: () => void
+  user: IUserData;
 }
 
+interface IUserData {
+  name: string
+  avatar_url: string
+  email: string
+}
 interface ISignIn {
   email: string
   password: string
@@ -20,7 +27,15 @@ interface ISignIn {
 export const AuthContext = createContext({} as IAuthContextData)
 
 export function AuthProvider({ children }: IAuthProvider) {
+  const [user, setUser] = useState(() => {
+    const user = localStorage.getItem('user:semana-heroi')
+    if (user) {
+      return JSON.parse(user)
+    }
+    return
+  })
   const navigate = useNavigate()
+
   async function signIn({ email, password }: ISignIn) {
     try {
       const { data } = await api.post('/users/auth', {
@@ -38,14 +53,23 @@ export function AuthProvider({ children }: IAuthProvider) {
       localStorage.setItem('user:semana-heroi', JSON.stringify(userData))
       navigate('/dashboard')
       toast.success(`Seja bem vindo(a), ${user.name}`)
+      setUser(userData)
       return data
     } catch (error) {
       if (isAxiosError(error)) toast.error(error.response?.data.message)
       else toast.error('Não foi possível fazer login. Tente mais tarde.')
     }
   }
+
+  function signOut() {
+    localStorage.removeItem('token:semana-heroi')
+    localStorage.removeItem('refresh_token:semana-heroi')
+    localStorage.removeItem('user:semana-heroi')
+    navigate('/')
+  }
+
   return (
-    <AuthContext.Provider value={{ signIn }} >
+    <AuthContext.Provider value={{ signIn, signOut, user }} >
       {children}
     </AuthContext.Provider >
   )

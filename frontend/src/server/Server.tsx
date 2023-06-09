@@ -44,9 +44,9 @@ api.interceptors.response.use(
         }
       }
     } else {
-      localStorage.removeItem('token:semana-heroi')
-      localStorage.removeItem('refresh_token:semana-heroi')
-      localStorage.removeItem('user:semana-heroi')
+      // localStorage.removeItem('token:semana-heroi')
+      // localStorage.removeItem('refresh_token:semana-heroi')
+      // localStorage.removeItem('user:semana-heroi')
     }
     return Promise.reject(error)
   })
