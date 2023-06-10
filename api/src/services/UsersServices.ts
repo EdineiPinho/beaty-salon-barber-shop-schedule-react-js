@@ -111,7 +111,7 @@ class UsersServices {
       throw new Error('There is no refresh token key')
     }
 
-    const verifyRefreshToken = verify(refresh_token, secretKeyRefresh)
+    const verifyRefreshToken = await verify(refresh_token, secretKeyRefresh)
 
     const { sub } = verifyRefreshToken
 

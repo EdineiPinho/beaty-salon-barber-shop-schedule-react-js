@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 import { api } from "../server/Server.tsx";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
@@ -12,6 +12,17 @@ interface IAuthContextData {
   signIn: ({ email, password }: ISignIn) => void
   signOut: () => void
   user: IUserData;
+  availableSchedules: Array<string>
+  schedules: Array<ISchedule>
+  date: Date
+  handleSetDate: () => void
+}
+
+interface ISchedule {
+  name: string
+  phone: string
+  date: Date
+  id: string
 }
 
 interface IUserData {
@@ -27,6 +38,22 @@ interface ISignIn {
 export const AuthContext = createContext({} as IAuthContextData)
 
 export function AuthProvider({ children }: IAuthProvider) {
+  const [schedules, setSchedules] = useState<Array<ISchedule>>([])
+  const [date, setDate] = useState(new Date())
+  const availableSchedules = [
+    '09',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19'
+  ]
+
   const [user, setUser] = useState(() => {
     const user = localStorage.getItem('user:semana-heroi')
     if (user) {
@@ -35,6 +62,22 @@ export function AuthProvider({ children }: IAuthProvider) {
     return
   })
   const navigate = useNavigate()
+  const handleSetDate = (date: any) => {
+    setDate(date)
+  }
+
+  useEffect(() => {
+    api.get('/schedules', {
+      params: {
+        date,
+      }
+    }).then((response) => {
+      console.log('response: ', response);
+      setSchedules(response.data)
+    }).catch((error) => {
+      console.log('error: ', error);
+    })
+  }, [date])
 
   async function signIn({ email, password }: ISignIn) {
     try {
@@ -69,7 +112,7 @@ export function AuthProvider({ children }: IAuthProvider) {
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut, user }} >
+    <AuthContext.Provider value={{ signIn, signOut, user, availableSchedules, schedules, date, handleSetDate }} >
       {children}
     </AuthContext.Provider >
   )

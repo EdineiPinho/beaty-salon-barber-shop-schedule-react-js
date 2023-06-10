@@ -1,6 +1,9 @@
 // import React from 'react'
+import { useEffect } from 'react'
+import { useAuth } from '../../hooks/auth.ts'
 import style from './ModalEdit.module.css'
 import { AiOutlineClose } from 'react-icons/ai'
+import { getHours } from 'date-fns'
 // import { GiConfirmed, GiCancel } from 'react-icons/gi'
 
 interface IModal {
@@ -10,8 +13,19 @@ interface IModal {
   name: string
 }
 
-const ModalEdit = ({ isOpen, handleChangeModal, hour, name }: IModal) => {
+const ModalEdit = ({ isOpen, handleChangeModal, hour, name, handleSetDate }: IModal) => {
+  const { availableSchedules, schedules, date } = useAuth()
   const currentDate = new Date().toISOString().split('T')[0]
+  const filteredDate = availableSchedules.filter((hour) => {
+    const isScheduleAvailable = !schedules.find((scheduleItem) => {
+      const scheduleDate = new Date(scheduleItem.date)
+      const schedulehour = getHours(scheduleDate)
+      return schedulehour === Number(hour)
+    })
+    return isScheduleAvailable
+  })
+  console.log('Data filtrada: ', filteredDate);
+
   if (isOpen) {
     return (
       <div className={style.background}>
@@ -24,7 +38,7 @@ const ModalEdit = ({ isOpen, handleChangeModal, hour, name }: IModal) => {
             <p>{hour}h {name}</p>
             <div className={style.input}>
               <label htmlFor="date">Informe uma nova data</label>
-              <input id="date" type="date" defaultValue={currentDate} />
+              <input id="date" type="date" defaultValue={currentDate} onChange={(e) => handleSetDate(e.target.value)} />
             </div>
             <div className={style.input}>
               <label htmlFor="hour">Informe um novo horário</label>
