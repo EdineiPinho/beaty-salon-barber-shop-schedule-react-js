@@ -36,7 +36,6 @@ const ModalEdit = ({ isOpen, handleChangeModal, hour, name, id }: IModal) => {
 
   const updateData = async () => {
     const formattedDate = formatISO(setHours(parseISO(date), parseInt(hourSchedule)),)
-    console.log('fommattedDate: ', formattedDate);
     try {
       await api.put(`/schedules/${id}`, {
         date: formattedDate
