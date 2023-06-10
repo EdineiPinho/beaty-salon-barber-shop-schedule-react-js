@@ -1,0 +1,105 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .2);
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 450px;
+  background-color: var(--white);
+  border-radius: 16px;
+  box-shadow: 4px 8px 4px rgba(0, 0, 0, .1);
+}
+
+.header {
+  padding: 2rem;
+  border-radius: 16px 16px 0 0;
+  background: var(--primary);
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+}
+
+.header svg {
+  cursor: pointer;
+}
+
+.body {
+  padding: 1rem 2rem;
+}
+
+.body>p {
+  color: var(--secundary);
+  font-size: 1.5rem;
+  margin-bottom: .8rem;
+}
+
+.input {
+  color: var(--primary);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: .5rem;
+  align-items: center;
+}
+
+.input>input[type='date'] {
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  width: 40%;
+  padding: .3rem;
+  color: var(--primary);
+  text-align: center;
+  cursor: pointer;
+}
+
+.input>select {
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  width: 40%;
+  text-align: center;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem 2rem 2rem;
+}
+
+.footer button {
+  border-radius: 16px;
+  align-items: center;
+  padding: .3rem 1.5rem;
+  font-weight: 300;
+  cursor: pointer;
+  width: 30%;
+}
+
+.footer>button:first-child {
+  border: 1px solid var(--secundary);
+  background: none;
+  color: var(--secundary);
+}
+
+.footer>button:first-child:hover {
+  background: var(--gray-50);
+}
+
+.footer>button:nth-child(2) {
+  border: 1px solid var(--secundary);
+  background: var(--secundary);
+  color: var(--white);
+}
+
+.footer>button:nth-child(2):hover {
+  background-color: var(--secundary-50);
+}

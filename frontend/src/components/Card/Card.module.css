@@ -32,6 +32,7 @@
 
 .icons {
   margin-right: .5rem;
+  cursor: pointer;
 }
 
 .icons svg {
