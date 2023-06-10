@@ -14,8 +14,8 @@ interface IAuthContextData {
   user: IUserData;
   availableSchedules: Array<string>
   schedules: Array<ISchedule>
-  date: Date
-  handleSetDate: () => void
+  date: string
+  handleSetDate: (date: string) => void
 }
 
 interface ISchedule {
@@ -39,7 +39,7 @@ export const AuthContext = createContext({} as IAuthContextData)
 
 export function AuthProvider({ children }: IAuthProvider) {
   const [schedules, setSchedules] = useState<Array<ISchedule>>([])
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState('')
   const availableSchedules = [
     '09',
     '10',
@@ -62,7 +62,7 @@ export function AuthProvider({ children }: IAuthProvider) {
     return
   })
   const navigate = useNavigate()
-  const handleSetDate = (date: any) => {
+  const handleSetDate = (date: string) => {
     setDate(date)
   }
 

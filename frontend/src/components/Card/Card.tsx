@@ -33,7 +33,12 @@ const Card = ({ name, date, id, phone }: ISchedule) => {
           <RiDeleteBinLine color="#EB2E2E" size={20} />
           <RiEditLine color="#5F68B1" size={20} onClick={() => isAfterDate && handleChangeModal()} />
         </div>
-        <ModalEdit isOpen={openModal} handleChangeModal={handleChangeModal} hour={hour} name={name} />
+        <ModalEdit
+          isOpen={openModal}
+          handleChangeModal={handleChangeModal}
+          hour={hour}
+          name={name}
+          id={id} />
       </div>
     </>
   )
