@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import { isAxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 interface IFormValues {
   date: string
@@ -19,13 +20,13 @@ interface IFormValues {
 }
 
 const Schedules = () => {
-  const schema = yup.object.shape({
+  const schema = yup.object().shape({
     phone: yup.string().required('Campo de telefone obrigatório.'),
     name: yup.string().required('Campo de nome obrigatório.'),
     date: yup.string().required('Campo de data obrigatório.'),
     hour: yup.string().required('Campo de hora obrigatório.'),
   })
-  const { register, handleSubmit } = useForm<IFormValues>({ resolver: yupResolver(schema) })
+  const { register, handleSubmit, formState: { errors } } = useForm<IFormValues>({ resolver: yupResolver(schema) })
   const { availableSchedules, schedules, handleSetDate } = useAuth()
   const navigate = useNavigate()
   const currentValue = new Date().toISOString().split('T')[0]
@@ -67,11 +68,13 @@ const Schedules = () => {
             placeholder='Nome do Cliente'
             type='text'
             {...register('name', { required: true })}
+            error={errors.name && errors.name.message}
           />
           <InputSchedule
             placeholder='Celular'
             type='text'
             {...register('phone', { required: true })}
+            error={errors.phone && errors.phone.message}
           />
           <div className={style.date}>
             <InputSchedule
@@ -79,16 +82,18 @@ const Schedules = () => {
               type='date'
               {...register('date',
                 { required: true, value: currentValue, onChange: (e) => handleSetDate(e.target.value) })}
+              error={errors.date && errors.date.message}
             />
             <div className={style.select}>
               <label htmlFor="hora">Hora</label>
-              <select {...register('hour', { required: true, })} >
+              <select {...register('hour', { required: true, })}>
                 {filteredDate.map((hour, index) => {
                   return (
                     <option key={index} value={hour}>{hour}:00h</option>
                   )
                 })}
               </select>
+              error={errors.hour && <span>errors.hour.message</span>}
             </div>
 
           </div>
