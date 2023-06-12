@@ -8,6 +8,7 @@ import { api } from '../server/Server.tsx'
 import { toast } from 'react-toastify'
 import { isAxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import * as yup from 'yup'
 
 interface IFormValues {
   date: string
@@ -18,7 +19,13 @@ interface IFormValues {
 }
 
 const Schedules = () => {
-  const { register, handleSubmit } = useForm<IFormValues>()
+  const schema = yup.object.shape({
+    phone: yup.string().required('Campo de telefone obrigatório.'),
+    name: yup.string().required('Campo de nome obrigatório.'),
+    date: yup.string().required('Campo de data obrigatório.'),
+    hour: yup.string().required('Campo de hora obrigatório.'),
+  })
+  const { register, handleSubmit } = useForm<IFormValues>({ resolver: yupResolver(schema) })
   const { availableSchedules, schedules, handleSetDate } = useAuth()
   const navigate = useNavigate()
   const currentValue = new Date().toISOString().split('T')[0]
@@ -49,10 +56,6 @@ const Schedules = () => {
       }
     }
   })
-
-  const handleChangeHour = (hour: string) => {
-    setHourSchedule(hour)
-  }
 
   return (
     <div className={`${style.container} container`}>
