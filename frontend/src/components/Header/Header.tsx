@@ -1,7 +1,7 @@
 import style from './Header.module.css'
 import logo from '../../assets/logo_branca.png'
 import { CgProfile } from 'react-icons/cg'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '../../hooks/auth.ts'
 
@@ -21,9 +21,9 @@ const Header = () => {
           <span>Perfil</span>
           {open && (
             <ul className={`${style.dropdownMenu} ${open && style.open}`}>
-              <li className={style.dropdownMenuItem}>Agendamentos</li>
-              <li className={style.dropdownMenuItem}>Editar Perfil</li>
-              <li className={style.dropdownMenuItem} onClick={signOut}>Sair</li>
+              <Link to={'/schedules'}><li className={style.dropdownMenuItem} >Agendamentos</li></Link>
+              <Link to={'/edit-profile'}><li className={style.dropdownMenuItem}>Editar Perfil</li></Link>
+              <Link to={'/'}><li className={style.dropdownMenuItem}>Sair</li></Link>
             </ul>
           )}
         </div>

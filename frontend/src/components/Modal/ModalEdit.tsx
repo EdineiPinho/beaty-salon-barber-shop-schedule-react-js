@@ -17,7 +17,13 @@ interface IModal {
   id: string
 }
 
-const ModalEdit = ({ isOpen, handleChangeModal, hour, name, id }: IModal) => {
+const ModalEdit = ({
+  isOpen,
+  handleChangeModal,
+  hour,
+  name,
+  id }
+  : IModal) => {
   const { availableSchedules, schedules, date, handleSetDate } = useAuth()
   const [hourSchedule, setHourSchedule] = useState('')
   const currentValue = new Date().toISOString().split('T')[0]
@@ -35,7 +41,8 @@ const ModalEdit = ({ isOpen, handleChangeModal, hour, name, id }: IModal) => {
   }
 
   const updateData = async () => {
-    const formattedDate = formatISO(setHours(parseISO(date), parseInt(hourSchedule)),)
+    const formattedDate = formatISO(
+      setHours(parseISO(date), parseInt(hourSchedule)),)
     try {
       await api.put(`/schedules/${id}`, {
         date: formattedDate
@@ -48,6 +55,8 @@ const ModalEdit = ({ isOpen, handleChangeModal, hour, name, id }: IModal) => {
       }
     }
   }
+
+
 
   if (isOpen) {
     return (

@@ -1,0 +1,68 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.footer button {
+  border-radius: 16px;
+  align-items: center;
+  padding: .5rem 1.5rem;
+  font-weight: 300;
+  cursor: pointer;
+  width: 40%;
+}
+
+.footer>button:first-child {
+  border: 1px solid var(--secundary);
+  background: none;
+  color: var(--secundary);
+}
+
+.footer>button:first-child:hover {
+  background: var(--gray-50);
+}
+
+.footer>button:nth-child(2) {
+  border: 1px solid var(--secundary);
+  background: var(--secundary);
+  color: var(--white);
+}
+
+.footer>button:nth-child(2):hover {
+  background-color: var(--secundary-50);
+}
+
+.date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date select {
+  border: 1px solid var(--primary);
+  border-radius: 16px;
+  width: 30%;
+  color: var(--primary);
+  background-color: transparent;
+  align-items: center;
+  height: fit-content;
+  padding: .5rem;
+}
+
+.container h2 {
+  font-weight: 300;
+  color: var(--primary);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.select {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.select label {
+  color: var(--primary);
+}
