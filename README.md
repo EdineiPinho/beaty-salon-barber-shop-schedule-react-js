@@ -1,4 +1,4 @@
-# beaUty-salon-barber-shop-schedule-react-js
+# beauty-salon-barber-shop-schedule-react-js
 
 > Foi usado durante o desenvolvimento do projeto:
 
